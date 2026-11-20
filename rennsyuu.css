@@ -1,0 +1,685 @@
+@import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Kaisei+Decol&display=swap');
+
+/* ==========================================================================
+   1. ページ全体の基本設定
+   ========================================================================== */
+   html, body {
+  overflow-x: hidden;
+}
+body {
+  font-family: 'Kaisei Decol', sans-serif;
+  /* ⚠️固定ヘッダー（70px）と文字が被らないように上の余白だけ追加しています */
+  padding-top: 80px; 
+}
+
+
+/* ==========================================================================
+   2. キャラクターイラストの配置（kyara）
+   ========================================================================== */
+
+.character { /* 天音 */
+  position: absolute;
+  top: 5vw;      /* 画面幅の12% */
+  right: 5vw;     /* 画面幅の4% */
+  width: 50vw;    /* 高さではなく幅で指定 */
+  height: auto;
+  z-index: 1;
+  pointer-events: none; /* 画像の上のクリックを邪魔しないように */
+}
+
+.character_one { /* 紫兎 */
+  position: absolute;
+  top: 10vw;      /* 画面幅の12% */
+  right: 12vw;     /* 画面幅の4% */
+  width: 7vw;    /* 高さではなく幅で指定 */
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+.character_two { /* 水色兎 */
+  position: absolute;
+  top: 15vw;      /* 画面幅の12% */
+  right: 7vw;     /* 画面幅の4% */
+  width: 7vw;    /* 高さではなく幅で指定 */
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+
+/* ==========================================================================
+   2. サムネイルエリア設定（samune1, 2, 3）
+   ========================================================================== */
+
+/* --- サムネイル共通設定（リンク化に伴う調整） --- */
+.samune1, .samune2, .samune3 {
+  display: block;
+  cursor: pointer;
+  z-index: 2;
+  overflow: hidden;      /* 幕や走る線が枠からはみ出さないように切る */
+  line-height: 0;
+  box-sizing: border-box;            
+  border: 3px solid #f07d9a; /* 通常時の白枠は残す設定にしています（不要なら削除OK） */
+
+  /* 浮き出るための基本設定 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.samune1 img, .samune2 img, .samune3 img {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100%;
+}
+
+/* ==========================================================================
+   アニメーションの設定（白い幕 ＋ 駆け抜ける外枠線）
+   ========================================================================== */
+
+/* 【1】薄い白い幕の設定 */
+.samune1::before, .samune2::before, .samune3::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.2); 
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 【2】変更：駆け抜ける外枠線の設定 */
+.samune1::after, .samune2::after, .samune3::after {
+  content: "";
+  position: absolute;
+  /* 
+    線を太くした分、外枠の真上にぴったり乗せるために
+    上下左右を「-6px」に広げます
+  */
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  pointer-events: none;
+  z-index: 2;
+  
+  /* ★ 線の太さを 3px から 6px に太くしました（もっと太くしたい場合は数値を増やしてください） */
+  border: 6px solid #ffd700; 
+  
+  /* 離したとき（右下から左上へ消える動き） */
+  clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
+  transition: clip-path 0.4s ease-in-out;
+}
+
+/* ==========================================================================
+   ホバー（カーソルを合わせたとき）の動き
+   ========================================================================= */
+
+/* 白い幕を動かす */
+.samune1:hover::before, .samune2:hover::before, .samune3:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* 線を左上から右下へ駆け抜けさせる */
+.samune1:hover::after, .samune2:hover::after, .samune3:hover::after {
+  animation: borderRun 0.5s ease-in-out forwards;
+}
+
+/* 合わせたとき用の使い捨てアニメーション */
+@keyframes borderRun {
+  0% {
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  50% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, 100% 0);
+  }
+  100% {
+    clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
+  }
+}
+
+/* ホバーしたときの拡大・浮き出し効果 */
+.samune1:hover, .samune2:hover, .samune3:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); 
+  z-index: 5; 
+}
+
+.samune1 { /* 真ん中 */
+  position: absolute;
+  top: 52vw;
+  right: 37.5vw; /* 37vw から変更 */
+  width: 25vw;
+}
+
+.samune2 { /* 左 */
+  position: absolute;
+  top: 52vw;
+  right: 67vw; /* 68vw から変更 */
+  width: 25vw;
+}
+
+.samune3 { /* 右 */
+  position: absolute;
+  top: 52vw;
+  right: 8vw; /* そのまま */
+  width: 25vw;
+}
+
+
+/* ==========================================================================
+   2.5 サムネイル拡大表示用ポップアップ（最前面に固定）
+   ========================================================================== */
+
+/* 拡大画面全体の背景（最初は非表示、透明度0） */
+.samune-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85); /* 画面全体を暗い黒にする */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease; 
+  z-index: 99999; /* 他のすべての要素・メニューより手前に出す */
+}
+
+/* 【ここが重要】JSでこのクラスがついた時だけフワッと表示する */
+.samune-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ポップアップのコンテナ設定 */
+.samune-popup-content {
+  position: relative;
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 90vw;                   
+  height: 90vh;                  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 拡大された画像自体のスタイル調整 */
+.samune-popup-content img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;                  
+  height: auto;                 
+  object-fit: contain;          
+  display: block;
+  border: none !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* 右上のバツ印（✖）のスタイル */
+.samune-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #fff !important;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 3;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.samune-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   3. プロフィール文字 ＆ アニメーション（fadeUp）
+   ========================================================================== */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px); /* 下に30pxズレた状態 */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);    /* 本来の位置に戻る */
+  }
+}
+
+.a {
+  position: relative;
+  top: clamp(25px, 5vw, 70px);        /* 70px → 画面幅に合わせる */
+  left: clamp(20px, 15vw, 220px);     /* 220px → 画面幅に合わせる */
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(8px, 1.2vw, 16px);
+  font-size: clamp(28px, 4.2vw, 60px);   /* 文字の大きさも変わる */
+  color: var(--ink);
+  font-weight: 600;
+  animation: fadeUp 1.0s ease-out forwards;
+}
+
+.pill--one { /* Hinamori   amane*/
+  position: relative;
+  top: clamp(40px, 8vw, 120px);     /* 120px → 画面幅に合わせる */
+  left: clamp(20px, 15vw, 220px);   /* 220px → 画面幅に合わせる */
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(8px, 1.2vw, 16px);
+  font-size: clamp(14px, 1.5vw, 20px);   /* 文字の大きさも変わる */
+  color: var(--ink);
+  font-weight: 600;
+  animation: fadeUp 1.2s 0.5s ease-out both;
+}
+
+
+.pill--two { /* 雛森　天音 */
+  position: relative;
+  top: clamp(35px, 7vw, 120px);       /* 100px → 画面幅に合わせる */
+  left: clamp(20px, 14vw, 205px);     /* 205px → 画面幅に合わせる */
+  padding: 0 clamp(10px, 1.7vw, 24px);
+  font-size: clamp(24px, 3.5vw, 50px);   /* 文字の大きさも変わる */
+  animation: fadeUp 1.2s ease-out forwards;
+  animation-delay: 0.8s;
+  opacity: 0;
+}
+
+
+/* ==========================================================================
+   プロフィール文章(画面幅に比例して位置が動く)
+   ========================================================================== */
+.pill--three {
+  position: relative;
+  top: clamp(60px, 12vw, 250px);       /* 100px → 画面幅に合わせる */
+  left: clamp(20px, 14vw, 205px);     /* 205px → 画面幅に合わせる */
+  padding: 0 clamp(10px, 1.7vw, 24px);
+  font-size: clamp(10px, 3.5vw, 25px);   /* 文字の大きさも変わる */
+  animation: fadeUp 1.2s ease-out forwards;
+  animation-delay: 0.8s;
+  opacity: 0;
+
+}
+.pill--four { /* 誕生日*/
+  display: block;   /* ← 追加:縦に分かれないようにする */
+  position: relative;
+  top: clamp(80px, 20vw, 300px);
+  left: clamp(20px, 14vw, 205px);
+  padding: 0 clamp(10px, 1.7vw, 24px);
+  font-size: clamp(10px, 3.5vw, 25px);
+  animation: fadeUp 1.2s ease-out forwards;
+  animation-delay: 0.8s;
+  opacity: 0;
+}
+
+.pill--four .birth-label {
+  display: inline-block;
+  margin-right: 1vw;   /* 「誕生日」の右の余白 */
+}
+
+/* ==========================================================================
+   4. SDキャラのポップアップボタン設定（SD2.png）
+   ========================================================================== */
+
+/* 🟢【修正】開くボタン（画像）の設定（プロフィールの右下に留まるように変更） */
+.open-btn {
+  /* 🛠️ 画面固定（fixed）ではなく、ページ内の絶対位置（absolute）に指定します */
+  position: absolute; 
+  display: block; 
+  text-decoration: none !important;
+  
+  /* 🛠️ プロフィールエリアの右下のちょうどいい位置に配置するための調整 */
+ top: 50vw;      /* 画面幅の12% */
+  right: 4vw;     /* 画面幅の4% */
+  width: 9vw;    /* 高さではなく幅で指定 */
+  height: auto;
+  z-index: 999;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* ボタンの中の画像サイズを細かく調整する設定（ここはそのまま） */
+.open-btn img {
+  width: 50%;          /* ボタン画像の横幅 */
+  height: auto;         /* 縦横比を崩さないためのおまじない */
+  display: block;
+  cursor: pointer;
+  transition: transform 0.2s; 
+}
+
+/* マウスを乗せたときに少しフワッと大きくする演出（ここはそのまま） */
+.open-btn img:hover {
+  transform: scale(1.1); 
+}
+
+/* 🟢【修正】画像を表示する背景（画面全体を薄く白く透けさせる） */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.85); /* 👈 黒から「薄い白」に変更しました */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* 最初は非表示にしておく設定 */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s; /* フワッと表示させる */
+  z-index: 9999; /* 一番上に表示させるおまじない */
+}
+
+/* ボタンが押されたとき（ターゲットになったとき）の処理 */
+.overlay:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 🟢【修正】画像を囲む箱（枠線や背景を完全に透明化） */
+.popup-content {
+  position: relative;
+  background-color: transparent !important; /* 背景を完全に透明に */
+  padding: 0 !important;                    /* 余白を完全にゼロに */
+  border: none !important;                  /* ⚠️まわりの枠線を完全に消す */
+  box-shadow: none !important;              /* ⚠️まわりの影を完全に消す */
+  
+  width: 90vw;                   
+  height: 90vh;                  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🟢【修正】表示される縦長画像自体（ここからも線を消し去ります） */
+.popup-content img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;                  
+  height: auto;                 
+  object-fit: contain;          
+  display: block;
+
+  /* 🛠️【ここを修正】画像自体にかかっている枠線や影を完全に無しにします */
+  border: none !important;                  /* ⚠️画像の枠線を消す */
+  outline: none !important;
+  box-shadow: none !important;              /* ⚠️画像の影を消す */
+}
+
+/* 🟢【修正】閉じるボタン（バツ印）の見た目 */
+.close-btn {
+  position: absolute;
+  /* 縦長画像の右上に綺麗に重なるように配置を調整 */
+  top: 10px;
+  right: 10px;
+  background-color: rgba(17, 17, 17, 0.8); /* 👈 白い画面でも見えやすいように黒い丸ボタンに */
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 36px;
+  text-decoration: none;
+  font-size: 16px;
+  z-index: 10002;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background-color: #111111; /* カーソルを乗せたときに少し濃くする */
+}
+
+/* 画像の外側の白い部分を押しても閉じられるようにする背景ボタン */
+.close-btn-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer; /* 👈 押せる場所だとわかりやすいようにカーソルを指マークに */
+}
+
+/* SDキャラ:位置と大きさを画面幅に比例させる */
+.open-btn {
+  position: absolute !important;
+  top: 41.8vw !important;      /* 上からの位置 */
+  right: 8.7vw !important;     /* 右からの位置 */
+  width: 6.0vw !important;     /* 大きさ */
+  display: block;
+  line-height: 0;
+  z-index: 3;
+}
+
+.open-btn img {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* ==========================================================================
+   5. SNSボタン設定（横並び・サイズ固定・他のPCでも絶対にズレない決定版）
+   ========================================================================== */
+.sns-button-container {
+  display: flex;
+  flex-direction: row;      /* 横並び */
+  gap: 15px;                /* ボタンとボタンの横のスキマ */
+  width: max-content;    
+  
+  /* 👇 ％やvwをすべて廃止し、px（ピクセル）で位置を完全にロックします */
+  position: absolute;       
+  top: 810px !important;    /* 💡 上から何pxの位置にするか（ご自身のPCに合わせて数字を調整してください） */
+  left: 225px !important;   /* 💡 画面の左端から何pxの位置にするか（ご自身のPCに合わせて数字を調整してください） */
+  
+  transform: none !important; 
+}
+
+/* 白い長方形のボタン本体 */
+.sns-button {
+  display: flex;
+  align-items: center;       
+  height: 45px;              /* 縦幅45px固定 */
+  width: 150px !important;   /* 横幅150px固定 */
+  
+  background-color: #ffffff; 
+  border: 1px solid #dddddd; 
+  border-radius: 8px;        
+  
+  /* 左寄せ配置 */
+  padding-left: 15px !important;  
+  padding-right: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  
+  text-decoration: none;     
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+  transition: background-color 0.2s ease;   
+}
+
+/* マウスを乗せたとき（ホバー時）の演出 */
+.sns-button:hover {
+  background-color: #f7f7f7; 
+}
+
+/* 左寄せのアイコン画像 */
+.sns-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;  
+  margin-right: 15px;   
+  filter: contrast(200%) brightness(150%) !important; /* 薄い灰色を消す設定 */
+}
+
+/* 右側のテキスト */
+.sns-text {
+  color: #333333;       
+  font-family: sans-serif; 
+  font-weight: bold;    
+  font-size: 16px;      
+}
+/* SNSボタン:位置と大きさを画面幅に比例させる(1920px基準で計算) */
+.sns-button-container {
+  top: 40vw !important;     /* 810px ÷ 1920 */
+  left: 11.7vw !important;    /* 225px ÷ 1920 */
+  gap: 0.8vw;                 /* 15px */
+}
+
+.sns-button {
+  height: 2.8vw;             /* 45px */
+  width: 9.8vw !important;    /* 150px */
+  padding-left: 1vw !important;   /* 15px */
+}
+
+.sns-icon {
+  width: 1.5vw;              /* 24px */
+  height: 1.5vw;
+  margin-right: 1vw;        /* 15px */
+}
+
+.sns-text {
+  font-size: 1.05vw;          /* 16px */
+}
+.sns-button-container {
+  gap: 1vw;                         /* 0.8vw → 1vw */
+}
+
+/* ==========================================================================
+   6. ページ遷移スライドカーテン（往復バグ完全解決・決定版）
+   ========================================================================== */
+#page-transition-curtain {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #ffecf2 !important; /* 💡 雛森天音さんのイメージカラー */
+    z-index: 999999 !important;          /* 他のすべてのポップアップや画像より必ず最前面に出す */
+    pointer-events: none;
+    
+    /* 🛠️ 初期状態：画面中央に配置した状態(0)からスタートさせます */
+    transform: translateX(0);
+    
+    /* 💡 ページが開いた瞬間、1.2秒かけて「右外側(100%)」へ自動で逃げて、そこで完全に静止（forwards）させます */
+    animation: realSlideOutRight 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* 【ボタンを押したとき】左外側(-100%)から画面全体(0)へ、1.0秒かけてゆっくりスライドして戻ってくる */
+#page-transition-curtain.slide-in {
+    animation: realSlideInLeft 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+/* 1. 左外側(-100%)から、画面中央(0)へ入ってくるアニメーション */
+@keyframes realSlideInLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+.profile-footer-space {
+    height: 28vw;   /* ← この数字を大きくするとフッターが下がる */
+}
+/* 2. 画面中央(0)から、右外側(100%)へ消え去るアニメーション（右外側に到達したあと、左へ絶対に戻りません） */
+@keyframes realSlideOutRight {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+/* ==========================================
+   フッターの完全修正用CSS
+   ========================================== */
+
+/* フッター全体のコンテナ（背景グラデーションと中央寄せ） */
+.site-footer {
+    position: relative;
+    z-index: 100;
+    clear: both;
+    width: 100%;
+    margin-top: 40px; /* メインコンテンツとの間に少し隙間を空ける */
+    padding: 60px 20px 24px;
+    background: linear-gradient(to right, #c9d6f5, #a8d0fa, #f5c6dd);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* フッターの中身をまとめる箱 */
+.footer-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* フッターのロゴ */
+.footer-logo {
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* フッターのナビゲーション（横並び・中央寄せ・黒丸削除） */
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none; /* リストの点（黒丸）を消す */
+}
+
+/* リスト項目の黒丸を確実に消す */
+.footer-nav li {
+    list-style: none;
+}
+
+/* フッターのリンク文字 */
+.footer-nav a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.3s;
+}
+
+.footer-nav a:hover {
+    opacity: 0.6;
+}
+
+/* コピーライト表記 */
+.footer-copy {
+    margin: 0;
+    font-size: 12px;
+    color: #555;
+}
+.pill--three::before {
+  content: "";
+  position: absolute;
+  top: -3.8vw; /* 膜の上の端(大きくすると上に広がる。「Profile」の上まで届かせる) */
+  left: -2vw;        /* 膜の左の端 */
+  width: 46vw;       /* 膜の横幅 */
+  height: calc(100% + 13vw);/* 膜の縦の長さ(誕生日の行まで届かせる) */
+  background: rgba(255, 255, 255, 0.527);  /* 薄い白(大きくすると白くなる) */
+  border-radius: 1vw;
+  z-index: -1;
+  pointer-events: none;
+}

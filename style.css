@@ -1,0 +1,118 @@
+/* ==========================================
+   カードカルーセル用 CSS（位置・大きさ・回転 完全版）
+   ========================================== */
+/* 1. カード全体を包むコンテナ */
+.flip-card-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 620px;               /* ★カードの高さ(576px)より大きくして下の余白を作る */
+  margin: 80px auto 60px auto; /* ★下の余白(60px)でフッターとの距離をとる */
+  display: block;
+  overflow: visible;
+}
+/* 各カードの基本設定（最初から正面サイズにしてボケを防ぐ） */
+.flip-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -102px; /* 幅(204px)の半分のマイナス値 */
+  width: 204px;        /* 170px × 1.2倍 のサイズを基準にする */
+  height: 576px;       /* 480px × 1.2倍 のサイズを基準にする */
+  perspective: 1000px;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transition: opacity 0.3s ease;
+  transform-origin: center center;
+}
+
+/* 画像をクッキリ綺麗に縮小表示させる設定 */
+.flip-card-front img,
+.flip-card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* 3. 内側のコンテナ（マウスホバー時にカードを180度回転させる） */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+/* マウスを乗せたときにカードがパタッと裏返る回転 */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* 4. 表面と裏面の共通設定（白いフチと影で立体的にする） */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* 裏側を向いたときに非表示にする */
+  border-radius: 16px;          /* 角丸 */
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 4px solid #ffffff;    /* 白い枠線 */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 立体的な影 */
+}
+
+/* 5. 画像がカード枠にきれいに収まるようにする */
+.flip-card-front img,
+.flip-card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 6. 裏面の初期位置をあらかじめ180度裏返しておく */
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* 7. 右隣の丸い Next ボタンの位置調整 */
+.card-next {
+  position: absolute;
+  right: -150px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: background 0.2s;
+}
+
+
+.card-next:hover {
+  background: #f0f0f0;
+}
+/* 右側の Next ボタンの色変更 */
+.card-next {
+  background: #ffecf2; /* ★ボタンの背景色（例：ふんわりピンク） */
+  color: #969696;      /* ★文字の色（例：濃いグレー） */
+  border: 2px solid #f5c6dd; /* ★枠線の色も合わせると可愛いです */
+}
+
+/* マウスを乗せたとき（ホバー時）の色 */
+.card-next:hover {
+  background: #f5c6dd; /* ★少し濃いピンクに変化 */
+}

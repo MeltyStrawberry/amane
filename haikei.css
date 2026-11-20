@@ -1,0 +1,23 @@
+.main-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1920 / 900;
+  background: url("haikei.png") center bottom / 100% 100% no-repeat;
+  /* overflow は付けない */
+}
+
+/* キャラ専用の切り取り枠(背景セクションと同じ大きさ) */
+.character-clip {
+  position: absolute;
+  inset: 0;                 /* top/right/bottom/left をすべて 0 にする */
+  overflow: hidden;         /* キャラだけここで切れる */
+  pointer-events: none;     /* 枠が他の要素のクリックを邪魔しない */
+}
+
+.character-clip .character {
+  position: absolute;
+  right: 5%;
+  bottom: 0;
+  height: 90%;
+  width: auto;
+}

@@ -1,0 +1,56 @@
+body {
+  background-image: url(".png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+}
+
+/* ==========================================================================
+   6. ページ遷移スライドカーテン（タイミング完全修正決定版）
+   ========================================================================== */
+
+#page-transition-curtain {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #ffecf2 !important; /* 幕の色 */
+    z-index: 999999 !important;
+    pointer-events: none;
+    
+    /* 🛠️ 重要：新ページが開いた瞬間は、画面を完全に覆った状態(-100%ではなく0)で強制ストップさせます */
+    transform: translateX(0) !important;
+}
+
+/* 【ボタンを押したとき】左外側(-100%)から、画面中央(0)へスライドイン */
+#page-transition-curtain.slide-in {
+    animation: realSlideInLeft 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+/* 【新しいページが開いたとき】画面中央(0)から、右外側(100%)へゆっくりスライドアウト */
+#page-transition-curtain.slide-out {
+    animation: realSlideOutRight 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+/* 1. 左から中央へ入ってくる動き */
+@keyframes realSlideInLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* 2. 中央から右へ消えていく動き */
+@keyframes realSlideOutRight {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}

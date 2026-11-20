@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CARD | About-amane Official Website</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rennsyuu.css">
+    <link rel="stylesheet" href="haikei.css">
+</head>
+<body>
+    <!-- 画面を覆うスライドカーテン用の幕 -->
+    <div id="page-transition-curtain"></div>
+
+    <div id="main-content">
+
+        <!-- ヘッダーエリア -->
+        <header class="site-header">
+            <div class="header-inner">
+                <div class="logo-area">
+                    <h1>°˖✧ Hinamori Amane ✧˖°</h1>
+                </div>
+
+                <nav class="site-nav">
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="profile.html">PROFILE</a></li>
+                        <li class="active"><a href="news.html">CARD</a></li>
+                        <li><a href="live2d.html">LIVE2D</a></li>
+                
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- カードの舞台 -->
+        <div class="flip-card-container">
+
+            <!-- カード1 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><img src="card1.png" alt="画像A"></div>
+                    <div class="flip-card-back"><img src="card2.png" alt="画像B"></div>
+                </div>
+            </div>
+
+            <!-- カード2 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><img src="card3.png" alt="画像C"></div>
+                    <div class="flip-card-back"><img src="card4.png" alt="画像D"></div>
+                </div>
+            </div>
+
+            <!-- カード3 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><img src="card5.png" alt="画像F"></div>
+                    <div class="flip-card-back"><img src="card6.png" alt="画像G"></div>
+                </div>
+            </div>
+
+            <!-- 右隣の小さい丸い Next ボタン -->
+            <button class="card-next" id="cardNext" aria-label="次のカード">Next</button>
+
+        </div> <!-- flip-card-container の終わり -->
+
+    </div> <!-- main-content の終わり -->
+
+    <!-- 画面を薄く白くするマスク -->
+    <div class="overlay-mask" id="overlayMask"></div>
+
+    <!-- 右からスライドするメニュー -->
+    <nav class="slide-menu" id="slideMenu">
+        <ul class="slide-nav-list">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="profile.html">PROFILE</a></li>
+            <li class="active"><a href="news.html">CARD</a></li>
+            <li><a href="live2d.html">LIVE2D</a></li>
+        
+        </ul>
+    </nav>
+
+    <!-- 右側に常時表示される3本線アイコンボタン -->
+    <button class="menu-trigger" aria-label="メニューを開く">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- メニュー開閉プログラム -->
+    <script>
+        const trigger = document.querySelector('.menu-trigger');
+        const slideMenu = document.getElementById('slideMenu');
+        const overlayMask = document.getElementById('overlayMask');
+
+        function toggleMenu() {
+            trigger.classList.toggle('active');
+            slideMenu.classList.toggle('open');
+            overlayMask.classList.toggle('open');
+        }
+
+        trigger.addEventListener('click', toggleMenu);
+        overlayMask.addEventListener('click', toggleMenu);
+    </script>
+
+    <!-- カードを円を描いて回すプログラム -->
+    <script>
+        const cards = Array.from(document.querySelectorAll('.flip-card'));
+        const N = cards.length;
+        const RADIUS = 22;       // 横に広がる幅(vw)。大きくすると左右のカードが外に離れる
+        const DURATION = 800;    // 回る時間(ミリ秒)。大きいほどゆっくり
+        const MIN_SCALE = 0.6;   // 奥にあるカードの大きさ
+        const MAX_SCALE = 1.2;   // 正面に来たカードの大きさ
+
+        let current = 0;         // 現在のアニメーション位置
+        let from = 0;            // アニメーション開始時の位置
+        let target = 0;          // 目標とする位置（インデックス）
+        let startTime = 0;
+        let rafId = null;
+
+        // カードの位置・大きさ・透明度を決める関数
+        function render(pos) {
+            cards.forEach((card, i) => {
+                // 正面からどれだけ離れているか
+                let d = i - pos;
+                d = ((d + N / 2) % N + N) % N - N / 2;
+
+                const angle = (d / N) * Math.PI * 2;
+                const x = Math.sin(angle) * RADIUS;           // 横の位置
+                const depth = (Math.cos(angle) + 1) / 2;      // 1=手前、0=奥
+                const scale = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * depth;
+
+                card.style.transform = `translateX(${x}vw) scale(${scale})`;
+                card.style.opacity = 0.35 + 0.65 * depth;
+                card.style.zIndex = Math.round(depth * 10);
+                card.classList.toggle('is-front', Math.abs(d) < 0.5);
+            });
+        }
+
+        // アニメーションのフレーム処理
+        function tick(now) {
+            const elapsed = now - startTime;
+            const t = Math.min(elapsed / DURATION, 1);
+            
+            // 滑らかなイージング（easeInOutCubic）
+            const eased = t < 0.5 
+                ? 4 * t * t * t 
+                : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+            current = from + (target - from) * eased;
+            render(current);
+
+            if (t < 1) {
+                rafId = requestAnimationFrame(tick);
+            } else {
+                current = target;
+                render(current);
+                rafId = null;
+            }
+        }
+
+        // 指定したインデックスへ向かって回転を開始する
+        function moveTo(newTarget) {
+            from = current;
+            target = newTarget;
+            startTime = performance.now();
+            if (!rafId) {
+                rafId = requestAnimationFrame(tick);
+            }
+        }
+
+        // Nextボタン（押すたびに次のカードへ進む）
+        document.getElementById('cardNext').addEventListener('click', () => {
+            moveTo(target + 1);
+        });
+
+        // 左右のカードをクリックしたら、それが正面に来るようにする
+        cards.forEach((card, i) => {
+            card.addEventListener('click', () => {
+                let d = i - (target % N);
+                // 最短距離で回るための計算
+                d = ((d + N / 2) % N + N) % N - N / 2;
+                moveTo(target + d);
+            });
+        });
+
+        // 初期描画
+        render(current);
+    </script>
+
+    <!-- スライドカーテン遷移用の共通スクリプト -->
+    <script src="a.js"></script>
+     <!-- ここからフッター -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p class="footer-logo">°˖✧ Hinamori Amane ✧˖°</p>
+            <ul class="footer-nav">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="profile.html">PROFILE</a></li>
+                <li><a href="news.html">CARD</a></li>
+                <li><a href="live2d.html">LIVE2D</a></li>
+                
+            </ul>
+            <p class="footer-copy">&copy; 2026 Hinamori Amane. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <style>
+    /* news.html (CARDページ) のフッターだけを単色の水色にする */
+    .site-footer {
+        background: #ffecf2 !important;
+        background-image: none !important;
+    }
+</style>
+
+</body>
+</html>

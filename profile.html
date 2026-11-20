@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About-amane Official Website</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rennsyuu.css">
+    <link rel="stylesheet" href="haikei.css">
+
+    
+</head>
+<body>
+    <!-- 画面を覆うスライドカーテン用の幕 -->
+    <div id="page-transition-curtain"></div>
+
+    <div id="main-content">
+
+    <!-- ヘッダーエリア -->
+    <header class="site-header">
+        <div class="header-inner">
+            <!-- VTuberネームエリア -->
+            <div class="logo-area">
+                <h1>°˖✧ Hinamori Amane ✧˖°</h1>
+            </div>
+            
+            <!-- ナビゲーションメニュー -->
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="active"><a href="profile.html">PROFILE</a></li>
+                    <li><a href="news.html">CARD</a></li>
+                    <li><a href="live2d.html">LIVE2D</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </header> <!-- ヘッダーの終わり -->
+
+    <!-- 中央基準のメインエリア -->
+    <div class="main-wrapper">
+      <div class="character-clip">
+         <img src="amane.png" alt="キャラクターイラスト" class="character">
+       </div>
+        <!-- プロフィールセクション -->
+        <div class="a">Profile</div>
+        <div class="pill pill--one">Hinamori    amane</div>
+        <div class="pill pill--two">雛森　天音</div>
+        <div class="profile-bg"></div>
+
+<div class="pill pill--three">
+    好奇心旺盛で、興味をもったことには積極的に取り組む。<br>
+    マイペースな一面もあり、個性豊かなお友達と毎日楽しく<br>
+    過ごしている。
+</div>
+<div class="pill pill--four"><span class="birth-label">誕生日</span>2008年2月5日</div>
+
+
+        <img src="usagi1.png" alt="キャラクターイラスト" class="character_one">
+        <img src="usagi2.png" alt="キャラクターイラスト" class="character_two">
+        
+        <a href="#popup-image" class="open-btn">
+            <img src="botan.png" alt="ボタン画像">
+        </a>
+
+        <!-- サムネイル1 -->
+        <div class="samune1" onclick="openSamuneModal('popup-samune1')">
+           <img src="zatudan.png" alt="さむね１">
+        </div>
+        
+        <!-- サムネイル2 -->
+        <div class="samune2" onclick="openSamuneModal('popup-samune2')">
+           <img src="hatuhaisin.png" alt="さむね2">
+        </div>
+        
+        <!-- サムネイル3 -->
+        <div class="samune3" onclick="openSamuneModal('popup-samune3')">
+            <img src="utawaku.png" alt="さむね3">
+        </div>
+
+        <!-- ==========================================
+             ここからサムネイル拡大用の画面本体（3つ分）
+             ========================================== -->
+        <!-- 拡大1 -->
+        <div id="popup-samune1" class="samune-overlay" onclick="closeSamuneModal('popup-samune1')">
+            <div class="samune-popup-content">
+                <img src="zatudan.png" alt="拡大画像1">
+                <div class="samune-close-btn">✖</div>
+            </div>
+        </div>
+
+        <!-- 拡大2 -->
+        <div id="popup-samune2" class="samune-overlay" onclick="closeSamuneModal('popup-samune2')">
+            <div class="samune-popup-content">
+                <img src="hatuhaisin.png" alt="拡大画像2">
+                <div class="samune-close-btn">✖</div>
+            </div>
+        </div>
+
+        <!-- 拡大3 -->
+        <div id="popup-samune3" class="samune-overlay" onclick="closeSamuneModal('popup-samune3')">
+            <div class="samune-popup-content">
+                <img src="utawaku.png" alt="拡大画像3">
+                <div class="samune-close-btn">✖</div>
+            </div>
+        </div>
+
+        <div class="sns-button-container">
+            <!-- YouTubeボタン -->
+            <div class="sns-button">
+                <img src="y.png" alt="YouTube" class="sns-icon">
+                <span class="sns-text">YouTube</span>
+            </div>
+
+            <!-- X（旧Twitter）ボタン -->
+            <div class="sns-button">
+                <img src="e.png" alt="X" class="sns-icon">
+                <span class="sns-text">X</span>
+            </div>
+        </div>
+
+    </div> <!-- 中央基準のエリアが終了 -->
+
+   </div> <!-- main-content の終わり -->
+
+    <!-- サムネイルの下にフッターを下げるための余白 -->
+    <div class="profile-footer-space"></div>
+
+    <!-- ここからフッター -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p class="footer-logo">°˖✧ Hinamori Amane ✧˖°</p>
+            <ul class="footer-nav">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="plofile.html">PROFILE</a></li>
+                <li><a href="news.html">CARD</a></li>
+                <li><a href="live2d.html">LIVE2D</a></li>
+                
+            </ul>
+            <p class="footer-copy">&copy; 2026 Hinamori Amane. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- SDキャラ用ポップアップ -->
+    <div id="popup-image" class="overlay">
+        <div class="popup-content">
+            <a href="#" class="close-btn-bg"></a>
+            <img src="tatie.png" alt="ポップアップ画像">
+            <a href="#" class="close-btn">✖</a>
+        </div>
+    </div>
+
+    <!-- 画面を薄く白くするマスク -->
+    <div class="overlay-mask" id="overlayMask"></div>
+
+    <!-- 右からスライドするメニュー -->
+    <nav class="slide-menu" id="slideMenu">
+        <ul class="slide-nav-list">
+            <li><a href="index.html">HOME</a></li>
+            <li class="active"><a href="profile.html">PROFILE</a></li>
+            <li><a href="news.html">CARD</a></li>
+            <li><a href="live2d.html">LIVE2D</a></li>
+            
+        </ul>
+    </nav>
+
+    <!-- 右側に常時表示される3本線アイコンボタン -->
+    <button class="menu-trigger" aria-label="メニューを開く">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- メニュー開閉プログラム -->
+    <script>
+        const trigger = document.querySelector('.menu-trigger');
+        const slideMenu = document.getElementById('slideMenu');
+        const overlayMask = document.getElementById('overlayMask');
+        
+        function toggleMenu() {
+            trigger.classList.toggle('active');
+            slideMenu.classList.toggle('open');
+            overlayMask.classList.toggle('open');
+        }
+
+        trigger.addEventListener('click', toggleMenu);
+        overlayMask.addEventListener('click', toggleMenu);
+    </script>
+
+    <!-- サムネイル用プログラム -->
+    <script>
+        function openSamuneModal(modalId) {
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            modal.classList.add('is-open');
+          }
+        }
+
+        function closeSamuneModal(modalId) {
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            modal.classList.remove('is-open');
+          }
+        }
+    </script>
+
+    <!-- スライドカーテン遷移用の共通スクリプト -->
+    <script src="a.js"></script>
+</body>
+</html>

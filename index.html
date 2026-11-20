@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About-amane Official Website</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+<div id="page-transition-curtain"></div>
+    <!-- ヘッダーエリア -->
+    <header class="site-header">
+        <div class="header-inner">
+            <!-- VTuberネームエリア -->
+            <div class="logo-area">
+                <h1>°˖✧ Hinamori Amane ✧˖°</h1>
+            </div>
+            
+            <!-- ナビゲーションメニュー（最初は画面の外に隠れています） -->
+            <nav class="site-nav">
+                <ul>
+                    <li class="active"><a href="index.html">HOME</a></li>
+                    <li><a href="profile.html">PROFILE</a></li>
+                    <li><a href="news.html">CARD</a></li>
+                    <li><a href="live2d.html">LIVE2D</a></li>
+                
+                </ul>
+            </nav>
+
+ 
+        </div>
+    </header>
+    
+
+    <!-- 右からスライドするメニュー -->
+    <nav class="slide-menu" id="slideMenu">
+        <ul class="slide-nav-list">
+            <li class="active"><a href="index.html">HOME</a></li>
+            <li><a href="profile.html">PROFILE</a></li>
+            <li><a href="news.html">CARD</a></li>
+            <li><a href="live2d.html">LIVE2D</a></li>
+            
+        </ul>
+    </nav>
+           <!-- 右側に常時表示される3本線アイコンボタン -->
+            <button class="menu-trigger" aria-label="メニューを開く">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+    <!-- ボタンを押したらメニューを開閉するプログラム（正しい位置に移動しました） -->
+    <script>
+        const trigger = document.querySelector('.menu-trigger');
+        const slideMenu = document.getElementById('slideMenu');
+        const overlayMask = document.getElementById('overlayMask');
+        
+        // アイコンボタン、または白いマスクエリアをクリックしたときの動き
+        function toggleMenu() {
+            trigger.classList.toggle('active');     // ボタンを「×」にする
+            slideMenu.classList.toggle('open');     // メニューを右からスライドさせる
+            overlayMask.classList.toggle('open');   // 背景を薄白くする
+        }
+
+        trigger.addEventListener('click', toggleMenu);
+        overlayMask.addEventListener('click', toggleMenu); // 薄白い背景を押しても閉じるようにする
+    </script>
+
+       <!-- 👇 ここにこの1行を絶対に追加してください！ -->
+    <script src="a.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Kaisei+Decol&display=swap');
+</style>
+</body>
+</html>

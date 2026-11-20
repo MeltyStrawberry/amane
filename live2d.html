@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About-amane Official Website</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="haikei.css">
+    <!-- スライドカーテンのアニメーションが入っているstyle.cssも一緒に読み込ませます -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 画面を覆うスライドカーテン用の幕 -->
+    <div id="page-transition-curtain"></div>
+    
+    <div id="main-content">
+
+        <!-- ヘッダーエリア -->
+        <header class="site-header">
+            <div class="header-inner">
+                <!-- VTuberネームエリア -->
+                <div class="logo-area">
+                    <h1>°˖✧ Hinamori Amane ✧˖°</h1>
+                </div>
+                
+                <!-- ナビゲーションメニュー -->
+                <nav class="site-nav">
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="profile.html">PROFILE</a></li>
+                        <li><a href="news.html">CARD</a></li>
+                        <li class="active"><a href="live2d.html">LIVE2D</a></li>
+                    
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        
+        <!-- 右からスライドするメニュー -->
+        <nav class="slide-menu" id="slideMenu">
+            <ul class="slide-nav-list">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="profile.html">PROFILE</a></li>
+                <li><a href="news.html">CARD</a></li>
+                <li class="active"><a href="live2d.html">LIVE2D</a></li>
+            </ul>
+        </nav>
+
+        <!-- 右側に常時表示される3本線アイコンボタン -->
+        <button class="menu-trigger" aria-label="メニューを開く">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- （※ここに置いてあった動画エリアを削除しました） -->
+
+    </div> <!-- main-content の終わり -->
+
+    <!-- ボタンを押したらメニューを開閉するプログラム -->
+    <script>
+        const trigger = document.querySelector('.menu-trigger');
+        const slideMenu = document.getElementById('slideMenu');
+        
+        function toggleMenu() {
+            trigger.classList.toggle('active');     // ボタンを「×」にする
+            slideMenu.classList.toggle('open');     // メニューを右からスライドさせる
+        }
+
+        trigger.addEventListener('click', toggleMenu);
+    </script>
+
+    <!-- スライドカーテン遷移用の共通スクリプト -->
+    <script src="a.js"></script>
+    <style>
+     .site-header,
+      .site-header h1,
+      .site-nav a,
+      .slide-menu a {
+        font-family: "Times New Roman", "游明朝", "Yu Mincho", serif !important;
+        font-weight: 400 !important;
+      }
+    </style>
+    
+</body>
+</html>
